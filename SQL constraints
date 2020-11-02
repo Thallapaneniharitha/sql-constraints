@@ -1,0 +1,128 @@
+1.NOT NULL:
+mysql> create table emp1(empno varchar(10) NOT NULL,empname varchar(10) NOT NULL,course varchar(8) NOT NULL,phno int(10) NOT NULL);
+Query OK, 0 rows affected (0.36 sec)
+mysql> insert into emp1 values(201,'susmitha','MCA',456789);
+Query OK, 1 row affected (0.07 sec)
+mysql> insert into emp1 values(202,'haritha','MCA',7896578);
+Query OK, 1 row affected (0.09 sec)
+mysql> select * from emp1;
++-------+----------+--------+---------+
+| empno | empname  | course | phno    |
++-------+----------+--------+---------+
+| 201   | susmitha | MCA    |  456789 |
+| 202   | haritha  | MCA    | 7896578 |
++-------+----------+--------+---------+
+2 rows in set (0.00 sec)
+
+2.PRIMARY KEY:
+mysql> insert into student5 values(201,'sarada','MCA',9876578);
+Query OK, 1 row affected (0.06 sec)
+mysql> insert into student5 values(202,'saritha','MCA',9873456);
+Query OK, 1 row affected (27.37 sec)
+mysql> select * from student5;
++-----+---------+--------+---------+
+| sno | sname   | course | phno    |
++-----+---------+--------+---------+
+| 201 | sarada  | MCA    | 9876578 |
+| 202 | saritha | MCA    | 9873456 |
++-----+---------+--------+---------+
+2 rows in set (0.00 sec)
+mysql> insert into student5 values(NULL,'saritha','MCA',9873456);
+ERROR 1048 (23000): Column 'sno' cannot be null
+
+3.UNIQUE:
+mysql> create table student6(sno int(100),sname varchar(200),course varchar(100),phno int(100),unique(sname));
+Query OK, 0 rows affected (0.38 sec)
+mysql> insert into student6 values(201,'susmitha','MCA',9876546);
+Query OK, 1 row affected (0.12 sec)
+mysql> insert into student6 values(202,'haritha','MCA',9876783);
+Query OK, 1 row affected (0.07 sec)
+mysql> select * from student6;
++------+----------+--------+---------+
+| sno  | sname    | course | phno    |
++------+----------+--------+---------+
+|  201 | susmitha | MCA    | 9876546 |
+|  202 | haritha  | MCA    | 9876783 |
++------+----------+--------+---------+
+2 rows in set (0.00 sec)
+mysql> insert into student6 values(203,'susmitha','MCA',9987657);
+ERROR 1062 (23000): Duplicate entry 'susmitha' for key 'sname'
+
+4.check constraint :
+mysql> CREATE TABLE employee3 (
+    ->     ID int NOT NULL,
+    ->     LastName varchar(255) NOT NULL,
+    ->     FirstName varchar(255),
+    ->     Age int,
+    ->     CHECK (Age>=18)
+    -> );
+Query OK, 0 rows affected (0.11 sec)
+mysql> insert into employee3 values(201,'hari','thallapa',16);
+Query OK, 1 row affected (0.04 sec)
+mysql> insert into employee3 values(202,'rani','thallapa',17);
+Query OK, 1 row affected (0.03 sec)
+mysql> insert into employee3 values(203,'ravi','thallapa',14);
+Query OK, 1 row affected (0.03 sec)
+mysql> select * from employee3;
++-----+----------+-----------+------+
+| ID  | LastName | FirstName     Age|
++-----+----------+-----------+------+
+| 201 | hari       thallapa  |   16 |
+| 202 | rani     | thallapa  |   17 |
+| 203 | ravi     | thallapa  |   14 |
++-----+----------+-----------+------+
+3 rows in set (0.00 sec)
+
+
+5.DEFAULT:
+mysql> ALTER TABLE employee3
+    -> ALTER FirstName SET DEFAULT 'Thallapa';
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+mysql> select * from employee3;
++-----+----------+-----------+------+
+| ID  | LastName | FirstName | Age  |
++-----+----------+-----------+------+
+| 201 | hari     | Thallapa   |   16 |
+| 202 | rani     | Thallapa   |   17 |
+| 203 | ravi     | Thallapa   |   14 |
+| 204 | pra      | Thallapa   |   20 |
++-----+----------+-----------+------+
+4 rows in set (0.00 sec)
+
+6.FOREIGN KEY :
+mysql> create table customer(customerno int(100) primary key,customername varchar(200));
+Query OK, 0 rows affected (0.07 sec)
+mysql> insert into customer values(10,'giri');
+Query OK, 1 row affected (0.04 sec)
+mysql> insert into customer values(20,'sai');
+Query OK, 1 row affected (0.02 sec)
+mysql> insert into customer values(30,'prakash');
+Query OK, 1 row affected (0.04 sec)
+mysql>  select * from customer;
++-----+-------+
+| customerno |customername |
++-----+-------+
+|  10 | giri   |
+|  20 | sai    |
+|  30 | prakas |
++-----+-------+
+3 rows in set (0.00 sec)
+mysql> create table Employee2(eno int(100) primary key,ename varchar(200),salary money,eno int foreign key references employee(empno));
+mysql> insert into Employee2 values(201,'giri'10000,);
+Query OK, 1 row affected (0.04 sec)
+mysql> insert into Employee2 values(202,'sai'20000,);
+Query OK, 1 row affected (0.03 sec)
+mysql> insert into Employee2 values(203,'prakash'30000,);
+Query OK, 1 row affected (0.02 sec)
+mysql> delete from employee where empname='sai';
+Query OK, 1 row affected (0.04 sec)
+mysql>  select * from employee2;
++-----+-------+
+| empno | empname |
++-----+-------+
+|  10 | sai   |
+|  20 | prakash  |
++-----+-------+
+3 rows in set (0.00 sec)
+
